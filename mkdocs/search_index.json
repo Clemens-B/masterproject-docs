@@ -1,0 +1,144 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Multi-User WebRTC Chat App \nMasterprojekt 2017\n\n\nEinleitung\n\n\nMulti-User WebRTC Chat App build with\n\n\n\n\nnode.js\n\n\nsocket.io\n\n\nangular2+\n\n\nKurento Media Server\n\n\n\n\nGliederung der Docs\n\n\n\n\nDesign \n UI\n\n\nArchitektur \n Prozesse\n\n\nArchitektur\n\n\nSequenz-Diagramm\n\n\n\n\n\n\nAPI", 
+            "title": "1. Einleitung"
+        }, 
+        {
+            "location": "/#multi-user-webrtc-chat-app-masterprojekt-2017", 
+            "text": "", 
+            "title": "Multi-User WebRTC Chat App Masterprojekt 2017"
+        }, 
+        {
+            "location": "/#einleitung", 
+            "text": "Multi-User WebRTC Chat App build with   node.js  socket.io  angular2+  Kurento Media Server", 
+            "title": "Einleitung"
+        }, 
+        {
+            "location": "/#gliederung-der-docs", 
+            "text": "Design   UI  Architektur   Prozesse  Architektur  Sequenz-Diagramm    API", 
+            "title": "Gliederung der Docs"
+        }, 
+        {
+            "location": "/design/", 
+            "text": "Startseite\n\n\n\n\nChat-Room-Seite\n\n\nNamenseingabe\n\n\n\n\nVideo-Liste\n\n\n\n\nLeave-Seite", 
+            "title": "2. Design & UI"
+        }, 
+        {
+            "location": "/design/#startseite", 
+            "text": "", 
+            "title": "Startseite"
+        }, 
+        {
+            "location": "/design/#chat-room-seite", 
+            "text": "", 
+            "title": "Chat-Room-Seite"
+        }, 
+        {
+            "location": "/design/#namenseingabe", 
+            "text": "", 
+            "title": "Namenseingabe"
+        }, 
+        {
+            "location": "/design/#video-liste", 
+            "text": "", 
+            "title": "Video-Liste"
+        }, 
+        {
+            "location": "/design/#leave-seite", 
+            "text": "", 
+            "title": "Leave-Seite"
+        }, 
+        {
+            "location": "/architecture/", 
+            "text": "Einleitung\n\n\nWichtige Kapitel:\n\n\n\n\nSFU Architektur\n\n\nClient-Server-MedienServer Architektur\n\n\n\n\nBeipiele f\u00fcr unterschiedliche Topologie-Implementierungen:\n\n\nMesh:\n \nappear.in\n\n\nMCU:\n \nbluejeans.com\n (kostenpflichtig)\n\n\nSFU:\n \njitsi.org\n\n\nWebRTC Multi-User Topologie\n\n\nIn WebRTC Multi-User Anwendungen l\u00e4sst sich zun\u00e4chst zwischen Star- und Mesh-Topologie unterscheiden. Beim Meshdesign ist jeder User mit jedem anderen User \u00fcber einen Peer verbunden, wohingegen bei der Startopologie ein zentrales System die Streams eines Users an andere User weiterleitet.\n\n\n\n\nEinfache Darstellung der Star-Topologie\n\n\n\n\nF\u00fcr die Implementierung einer Star-Topologie wird ein sog. WebRTC-Medien-Server verwendet. Im Rahmen dieses Projektes wurde sich f\u00fcr \nKurento\n als Basis der gesamten Anwendung entschieden.\n\n\nStar-Topologie-Designs\n\n\nInnerhalb des Star-Topologie-Design l\u00e4sst sich weiterhin zwischen \nSelective Forwarding Unit\n (\nSFU\n) und \nMultipoint Conferencing Unit\n (\nMCU\n) unterscheiden. Im Folgenden wird nun n\u00e4her auf die einzelnen Designs eingegangen und deren Implementierung mit Kurento. Im Rahmen des Projektes wird die SFU-Architektur umgesetzt. \nHier\n kann direkt das MCU-Kapitel \u00fcbersprungen werden.\n\n\nMCU\n\n\nMCU steht f\u00fcr \"Multipoint Conferencing Unit\". Ein MCU bietet die M\u00f6glichkeit, mehrere Teilnehmer in einem einzelnem Audio/+Video Stream zu verbinden. Die Media-Streams der einzelnen Teilnehmer werden dabei zu einem einzigen Stream gemixt, d.h. es besteht nur ein Upload-Stream f\u00fcr das gesendete Video/Audio und ein Download-Stream f\u00fcr das Video/Audio der restlichen Teilnehmer. In folgender Abbildung wird deutlich, dass die Teilnehmer je nur eine Verbindung zum Medien-Server haben und der Medien-Server insgesamt 5 Verbinden offen hat: \n\n\n\n\nConnections: 1 | 5 \n\n\nMCU Architektur\n\n\n\n\nUm dies zu erreichen, m\u00fcssen die einzelnen Streams der Teilnehmer zu einem Stream kompiniert werden. In MCU muss also folgendes f\u00fcr jeden Teilnehmer leisten:\n\n\n\n\nVerarbeitung der Media-Streams von einer MCU\n\n\n\n\nDie Kombination mehrerer Streams erfordert viele Ressourcen des MCU. In der Darstellung ist der Ressourcenaufwand von gr\u00fcn zu rot markiert, mit welcher die CPU belastet wird.\n\n\nMCU mit Kurento\n\n\nMit Kurento ist ein kombinierter Stream m\u00f6glich. Dazu wird zun\u00e4chst eine Mediapipeline erstellt und diese als kombinierter Stream konfiguriert. Ein Hub auf dieser kombinierten Pipeline, sorgt daf\u00fcr, dass alle Clients andocken k\u00f6nnen.\n\n\nkurento\n.\ncreate\n(\nMediaPipeline\n,\n \nfunction\n(\nerror\n,\n \nmediaPipeline\n)\n \n{\n\n    \nif\n \n(\nerror\n)\n \nreturn\n \nerror\n;\n\n    \nmediaPipeline\n.\ncreate\n(\nComposite\n,\n \nfunction\n(\nerror\n,\n \ncomposite\n)\n \n{\n\n        \nif\n \n(\nerror\n)\n \nreturn\n \nerror\n;\n\n        \ncomposite\n.\ncreateHubPort\n(\nfunction\n(\nerror\n,\n \nhubPort\n)\n \n{\n\n            \nif\n \n(\nerror\n)\n \nreturn\n \n(\nerror\n);\n\n            \nhubPort\n.\nconnect\n(\nwebRtcEndpoint\n,\n \nfunction\n(\nerror\n)\n \n{\n\n                \nif\n \n(\nerror\n)\n \nreturn\n \nonerror\n(\nerror\n);\n\n\n                \n[....]\n\n\n\n});\n\n\n\n\n\n\nVor- und Nachteile\n\n\nVorteil:\n\n\n\n\nwenig Networkverkehr\n\n\n\n\nNachteile:\n\n\n\n\nhoher Ressourcenverbrauch\n\n\nfestes Grid f\u00fcr Videos\n\n\nLange Setup-Zeit, um Call zu etablieren (bei bluejeans \nim Durchschnitt 24 Sekunden\n bis ein Teilnehmer am Chat teilnehmen kann)\n\n\n\n\nSFU\n\n\nSFU steht f\u00fcr \"Selective Forwarding Unit\". In einer SFU empf\u00e4ngt der Teilnehmer alle Streams der anderen User einzeln. Jedoch im Gegensatz zum Mesh-Design wird sein eigener Stream nur einmal an den Medien-Server geleitet. Der Medien-Server dient somit als eine Art Router, der entscheidet, welcher User welchen Stream angezeigt bekommt. Dies hat den Vorteil, dass f\u00fcr jeden Stream ein Video-Element kreiert werden kann und so dieses in der Gr\u00f6\u00dfe etc. angepasst werden kann. Des Weiteren ist die Setup-Zeit f\u00fcr einen Call geringer, da der Stream nicht mehr mit den anderen Streams gemergt werden muss (siehe MCU), was wiederum zu einer geringeren Last auf dem Medien-Server bedeutet. In folgender Abbildung wird deutlich, dass der Nutzer seinen eigenen Stream nur einmal uploaded, daf\u00fcr aber von jedem Teilnehmer einen Stream empf\u00e4ngt:\n\n\n\n\nConnections: 5 | 25 \n\n\nSFU Architektur\n\n\n\n\nIm Gegensatz zur MCU wird hier der Stream der Teilnehmer nicht kombiniert, sondern einfach nur weitergeleitet. Somit sieht die Verarbeitung von Video/Audio in einer SFU wie folgt aus:\n\n\n\n\nVerarbeitung der Media-Streams von einer SFU\n\n\n\n\nSFU mit Kurento\n\n\nF\u00fcr eine SFU mit Kurento wird zun\u00e4chst f\u00fcr jeden Raum eine Media-Pipeline erstellt, auf der darauf die verschiedenen WebRTC-Endpoints registriert werden. In der Beispiel-Abbildung mit 5 Usern hat jeder User 5 WebRTC-Endpoints:\n\n\nEin Outgoing-Endpoint\n\nVier Incoming-Endpoints\n\n\nD.h. f\u00fcr einen User wird zun\u00e4chst ein Outgoing-Endpoint erstellt. Folgender Pseudo-Code geht davon aus, dass noch keine Media-Pipeline erstellt wurde (Room-Creator).\n\n\nkurento\n.\ncreate\n(\nMediaPipeline\n,\n \n(\nerror\n,\n \nmediaPipeline\n)\n \n=\n \n{\n\n    \nif\n \n(\nerror\n)\n \nreturn\n \nerror\n;\n\n    \nmediaPipeline\n.\ncreate\n(\nWebRtcEndpoint\n,\n \n(\nerror\n,\n \noutgoingMedia\n)\n \n=\n \n{\n\n        \nif\n \n(\nerror\n)\n \nreturn\n \nerror\n;\n\n        \nuser\n.\noutgoingMedia\n \n=\n \noutgoingMedia\n;\n\n\n        \nuser\n.\noutgoingMedia\n.\non\n(\nOnIceCandidate\n,\n \n(\nevent\n)\n \n=\n \n{\n\n            \nconsole\n.\nlog\n(\ngenerate outgoing candidate : \n \n+\n \nuser\n.\nid\n);\n\n            \nkurento\n.\nregister\n.\ncomplexTypes\n.\nIceCandidate\n(\nevent\n.\ncandidate\n);\n\n        \n});\n\n\n        \n[....]\n\n\n\n});\n\n\n\n\n\n\nAuf Client-Seite bedeutet dies, dass hierf\u00fcr nur ein send-only Kanal f\u00fcr den User erstellt werden sollte. Gleichzeitig sollte f\u00fcr die anderen 4 User nur ein read-only Kanal erstellt werden. Auf Server-Seite wird daf\u00fcr \n\n\ngetEndpointForUser\n(\nuser\n,\n \nsender\n){\n\n    \nmediaPipeline\n.\ncreate\n(\nWebRtcEndpoint\n,\n \n(\nerror\n,\n \nincomingMedia\n)\n \n=\n \n{\n\n        \nif\n \n(\nerror\n)\n \nreturn\n \nerror\n;\n\n        \nuser\n.\nincomingMedia\n[\nsender\n.\nid\n]\n \n=\n \nincomingMedia\n;\n\n\n        \nuser\n.\nincomingMedia\n.\non\n(\nOnIceCandidate\n,\n \n(\nevent\n)\n \n=\n \n{\n\n            \nconsole\n.\nlog\n(\ngenerate incoming media candidate : \n \n+\n \nuser\n.\nid\n \n+\n \n from \n \n+\n \nsender\n.\nid\n);\n\n            \nkurento\n.\nregister\n.\ncomplexTypes\n.\nIceCandidate\n(\nevent\n.\ncandidate\n);\n\n            \n});\n\n\n        \n[....]\n\n\n    \n)}\n        \n\n};\n\n\n\n\n\n\nVor- und Nachteile\n\n\nVorteile:\n\n\n\n\nEinzelne Videoelemente f\u00fcr jeden Teilnehmer\n\n\nSchneller Call-Aufbau\n\n\nIm Gegensatz zu MCU wenig Ressourcen-Verbrauch\n\n\n\n\nNachteil:\n\n\n\n\nNetzwerk-Verkehr nicht ganz so gering wie bei MCU\n\n\n\n\nClient-Server-MedienServer Architektur\n\n\nF\u00fcr die Implementierung eines SFU sind folgende Komponenten notwendig:\n\n\n\n\nClient\n\n\nZust\u00e4ndig f\u00fcr: Senden und Empfangen der Media-Streams, Signaling, ...\n\n\nApplication Server\n\n\nZust\u00e4ndig f\u00fcr: Signaling, Kurento-API-Anbindung, ...\n\n\nKurento Media-Server\n\n\nZust\u00e4ndig f\u00fcr: IceCanditaten-Erstellung, Stun + Turn, Media-Streams, ...\n\n\n\n\nArchitektur\n\n\nDer Application-Server stellt zum Client eine Verbindung via Websocket her, um hierdr\u00fcber die SDP-Offers/-Answers auszutauschen. Diese werden daraufhin vom Application-Server bei Kurento regestriert, nachdem eine Media-Pipeline f\u00fcr den jeweiligen Raum erstellt wurde.\n\n\n\n\nVereinfachte Darstellung der Architektur\n\n\n\n\nDies bedeutet, das im Rahmen dieses Projektes der Appikation-Server entwickelt werden muss, der das Signalling im Trickle ICE Format \u00fcbernimmt und eine Verbindung zu Kurento aufbaut.\n\n\nDie Architektur l\u00e4sst sich ausf\u00fchrlicher wie folgt darstellen:\n\n\n\nArchitektur Darstellung nach \nKurento\n\n\n\n\nTech-Stack\n\n\nDer Client und Appication-Server kommunizieren dabei \u00fcber eine Schnittstelle (siehe API). Da ein Ziel der Anwendung auch ein Text-Chat ist, bietet sich als Schnittstellen-Protokoll Websocket bzw. socket.io an. \n\n\nAls Client wird Angular2+ verwendet. Der Application-Server basiert auf Node.js. Kurento ist Open-Source und in C geschrieben\n\n\nReferenzen\n\n\nhttps://webrtcglossary.com/sfu/\n\n\nhttps://webrtcglossary.com/mcu/\n\n\nhttps://bloggeek.me/webrtc-multiparty-video-alternatives/\n\n\nhttps://testrtc.com/different-multiparty-video-conferencing/\n\n\nhttp://doc-kurento.readthedocs.io/en/stable/mastering/kurento_architecture.html", 
+            "title": "3.1 Architekur"
+        }, 
+        {
+            "location": "/architecture/#einleitung", 
+            "text": "Wichtige Kapitel:   SFU Architektur  Client-Server-MedienServer Architektur   Beipiele f\u00fcr unterschiedliche Topologie-Implementierungen:  Mesh:   appear.in  MCU:   bluejeans.com  (kostenpflichtig)  SFU:   jitsi.org", 
+            "title": "Einleitung"
+        }, 
+        {
+            "location": "/architecture/#webrtc-multi-user-topologie", 
+            "text": "In WebRTC Multi-User Anwendungen l\u00e4sst sich zun\u00e4chst zwischen Star- und Mesh-Topologie unterscheiden. Beim Meshdesign ist jeder User mit jedem anderen User \u00fcber einen Peer verbunden, wohingegen bei der Startopologie ein zentrales System die Streams eines Users an andere User weiterleitet.   Einfache Darstellung der Star-Topologie   F\u00fcr die Implementierung einer Star-Topologie wird ein sog. WebRTC-Medien-Server verwendet. Im Rahmen dieses Projektes wurde sich f\u00fcr  Kurento  als Basis der gesamten Anwendung entschieden.", 
+            "title": "WebRTC Multi-User Topologie"
+        }, 
+        {
+            "location": "/architecture/#star-topologie-designs", 
+            "text": "Innerhalb des Star-Topologie-Design l\u00e4sst sich weiterhin zwischen  Selective Forwarding Unit  ( SFU ) und  Multipoint Conferencing Unit  ( MCU ) unterscheiden. Im Folgenden wird nun n\u00e4her auf die einzelnen Designs eingegangen und deren Implementierung mit Kurento. Im Rahmen des Projektes wird die SFU-Architektur umgesetzt.  Hier  kann direkt das MCU-Kapitel \u00fcbersprungen werden.", 
+            "title": "Star-Topologie-Designs"
+        }, 
+        {
+            "location": "/architecture/#mcu", 
+            "text": "MCU steht f\u00fcr \"Multipoint Conferencing Unit\". Ein MCU bietet die M\u00f6glichkeit, mehrere Teilnehmer in einem einzelnem Audio/+Video Stream zu verbinden. Die Media-Streams der einzelnen Teilnehmer werden dabei zu einem einzigen Stream gemixt, d.h. es besteht nur ein Upload-Stream f\u00fcr das gesendete Video/Audio und ein Download-Stream f\u00fcr das Video/Audio der restlichen Teilnehmer. In folgender Abbildung wird deutlich, dass die Teilnehmer je nur eine Verbindung zum Medien-Server haben und der Medien-Server insgesamt 5 Verbinden offen hat:    Connections: 1 | 5   MCU Architektur   Um dies zu erreichen, m\u00fcssen die einzelnen Streams der Teilnehmer zu einem Stream kompiniert werden. In MCU muss also folgendes f\u00fcr jeden Teilnehmer leisten:   Verarbeitung der Media-Streams von einer MCU   Die Kombination mehrerer Streams erfordert viele Ressourcen des MCU. In der Darstellung ist der Ressourcenaufwand von gr\u00fcn zu rot markiert, mit welcher die CPU belastet wird.", 
+            "title": "MCU"
+        }, 
+        {
+            "location": "/architecture/#mcu-mit-kurento", 
+            "text": "Mit Kurento ist ein kombinierter Stream m\u00f6glich. Dazu wird zun\u00e4chst eine Mediapipeline erstellt und diese als kombinierter Stream konfiguriert. Ein Hub auf dieser kombinierten Pipeline, sorgt daf\u00fcr, dass alle Clients andocken k\u00f6nnen.  kurento . create ( MediaPipeline ,   function ( error ,   mediaPipeline )   { \n     if   ( error )   return   error ; \n     mediaPipeline . create ( Composite ,   function ( error ,   composite )   { \n         if   ( error )   return   error ; \n         composite . createHubPort ( function ( error ,   hubPort )   { \n             if   ( error )   return   ( error ); \n             hubPort . connect ( webRtcEndpoint ,   function ( error )   { \n                 if   ( error )   return   onerror ( error ); \n\n                 [....]  });", 
+            "title": "MCU mit Kurento"
+        }, 
+        {
+            "location": "/architecture/#vor-und-nachteile", 
+            "text": "Vorteil:   wenig Networkverkehr   Nachteile:   hoher Ressourcenverbrauch  festes Grid f\u00fcr Videos  Lange Setup-Zeit, um Call zu etablieren (bei bluejeans  im Durchschnitt 24 Sekunden  bis ein Teilnehmer am Chat teilnehmen kann)", 
+            "title": "Vor- und Nachteile"
+        }, 
+        {
+            "location": "/architecture/#sfu", 
+            "text": "SFU steht f\u00fcr \"Selective Forwarding Unit\". In einer SFU empf\u00e4ngt der Teilnehmer alle Streams der anderen User einzeln. Jedoch im Gegensatz zum Mesh-Design wird sein eigener Stream nur einmal an den Medien-Server geleitet. Der Medien-Server dient somit als eine Art Router, der entscheidet, welcher User welchen Stream angezeigt bekommt. Dies hat den Vorteil, dass f\u00fcr jeden Stream ein Video-Element kreiert werden kann und so dieses in der Gr\u00f6\u00dfe etc. angepasst werden kann. Des Weiteren ist die Setup-Zeit f\u00fcr einen Call geringer, da der Stream nicht mehr mit den anderen Streams gemergt werden muss (siehe MCU), was wiederum zu einer geringeren Last auf dem Medien-Server bedeutet. In folgender Abbildung wird deutlich, dass der Nutzer seinen eigenen Stream nur einmal uploaded, daf\u00fcr aber von jedem Teilnehmer einen Stream empf\u00e4ngt:   Connections: 5 | 25   SFU Architektur   Im Gegensatz zur MCU wird hier der Stream der Teilnehmer nicht kombiniert, sondern einfach nur weitergeleitet. Somit sieht die Verarbeitung von Video/Audio in einer SFU wie folgt aus:   Verarbeitung der Media-Streams von einer SFU", 
+            "title": "SFU"
+        }, 
+        {
+            "location": "/architecture/#sfu-mit-kurento", 
+            "text": "F\u00fcr eine SFU mit Kurento wird zun\u00e4chst f\u00fcr jeden Raum eine Media-Pipeline erstellt, auf der darauf die verschiedenen WebRTC-Endpoints registriert werden. In der Beispiel-Abbildung mit 5 Usern hat jeder User 5 WebRTC-Endpoints:  Ein Outgoing-Endpoint \nVier Incoming-Endpoints  D.h. f\u00fcr einen User wird zun\u00e4chst ein Outgoing-Endpoint erstellt. Folgender Pseudo-Code geht davon aus, dass noch keine Media-Pipeline erstellt wurde (Room-Creator).  kurento . create ( MediaPipeline ,   ( error ,   mediaPipeline )   =   { \n     if   ( error )   return   error ; \n     mediaPipeline . create ( WebRtcEndpoint ,   ( error ,   outgoingMedia )   =   { \n         if   ( error )   return   error ; \n         user . outgoingMedia   =   outgoingMedia ; \n\n         user . outgoingMedia . on ( OnIceCandidate ,   ( event )   =   { \n             console . log ( generate outgoing candidate :    +   user . id ); \n             kurento . register . complexTypes . IceCandidate ( event . candidate ); \n         }); \n\n         [....]  });   Auf Client-Seite bedeutet dies, dass hierf\u00fcr nur ein send-only Kanal f\u00fcr den User erstellt werden sollte. Gleichzeitig sollte f\u00fcr die anderen 4 User nur ein read-only Kanal erstellt werden. Auf Server-Seite wird daf\u00fcr   getEndpointForUser ( user ,   sender ){ \n     mediaPipeline . create ( WebRtcEndpoint ,   ( error ,   incomingMedia )   =   { \n         if   ( error )   return   error ; \n         user . incomingMedia [ sender . id ]   =   incomingMedia ; \n\n         user . incomingMedia . on ( OnIceCandidate ,   ( event )   =   { \n             console . log ( generate incoming media candidate :    +   user . id   +    from    +   sender . id ); \n             kurento . register . complexTypes . IceCandidate ( event . candidate ); \n             }); \n\n         [....] \n\n     )}          };", 
+            "title": "SFU mit Kurento"
+        }, 
+        {
+            "location": "/architecture/#vor-und-nachteile_1", 
+            "text": "Vorteile:   Einzelne Videoelemente f\u00fcr jeden Teilnehmer  Schneller Call-Aufbau  Im Gegensatz zu MCU wenig Ressourcen-Verbrauch   Nachteil:   Netzwerk-Verkehr nicht ganz so gering wie bei MCU", 
+            "title": "Vor- und Nachteile"
+        }, 
+        {
+            "location": "/architecture/#client-server-medienserver-architektur", 
+            "text": "F\u00fcr die Implementierung eines SFU sind folgende Komponenten notwendig:   Client  Zust\u00e4ndig f\u00fcr: Senden und Empfangen der Media-Streams, Signaling, ...  Application Server  Zust\u00e4ndig f\u00fcr: Signaling, Kurento-API-Anbindung, ...  Kurento Media-Server  Zust\u00e4ndig f\u00fcr: IceCanditaten-Erstellung, Stun + Turn, Media-Streams, ...", 
+            "title": "Client-Server-MedienServer Architektur"
+        }, 
+        {
+            "location": "/architecture/#architektur", 
+            "text": "Der Application-Server stellt zum Client eine Verbindung via Websocket her, um hierdr\u00fcber die SDP-Offers/-Answers auszutauschen. Diese werden daraufhin vom Application-Server bei Kurento regestriert, nachdem eine Media-Pipeline f\u00fcr den jeweiligen Raum erstellt wurde.   Vereinfachte Darstellung der Architektur   Dies bedeutet, das im Rahmen dieses Projektes der Appikation-Server entwickelt werden muss, der das Signalling im Trickle ICE Format \u00fcbernimmt und eine Verbindung zu Kurento aufbaut.  Die Architektur l\u00e4sst sich ausf\u00fchrlicher wie folgt darstellen:  Architektur Darstellung nach  Kurento", 
+            "title": "Architektur"
+        }, 
+        {
+            "location": "/architecture/#tech-stack", 
+            "text": "Der Client und Appication-Server kommunizieren dabei \u00fcber eine Schnittstelle (siehe API). Da ein Ziel der Anwendung auch ein Text-Chat ist, bietet sich als Schnittstellen-Protokoll Websocket bzw. socket.io an.   Als Client wird Angular2+ verwendet. Der Application-Server basiert auf Node.js. Kurento ist Open-Source und in C geschrieben", 
+            "title": "Tech-Stack"
+        }, 
+        {
+            "location": "/architecture/#referenzen", 
+            "text": "https://webrtcglossary.com/sfu/  https://webrtcglossary.com/mcu/  https://bloggeek.me/webrtc-multiparty-video-alternatives/  https://testrtc.com/different-multiparty-video-conferencing/  http://doc-kurento.readthedocs.io/en/stable/mastering/kurento_architecture.html", 
+            "title": "Referenzen"
+        }, 
+        {
+            "location": "/sequenz/", 
+            "text": "Einleitung\n\n\nDie Anwendung arbeitet mit dem sog. Trickle Ice Protokoll. Bei Trickle Ice passiert der Austausch der SDP-Offers und die generierung der Ice Candidates gleichzeitig/parallel, sodass dieses lineare Sequenzdiagramm nicht ganz der Realit\u00e4t entspricht, soll aber zu Verdeutlichung der einzelnen Schritte helfen.\n\n\nF\u00fcr eine Erl\u00e4uterung von Trickle Ice siehe \nhier\n.\n\n\nSequenzdiagramm\n\n\n\n\nSequenzdiagramm", 
+            "title": "3.2 Sequenzdiagramm"
+        }, 
+        {
+            "location": "/sequenz/#einleitung", 
+            "text": "Die Anwendung arbeitet mit dem sog. Trickle Ice Protokoll. Bei Trickle Ice passiert der Austausch der SDP-Offers und die generierung der Ice Candidates gleichzeitig/parallel, sodass dieses lineare Sequenzdiagramm nicht ganz der Realit\u00e4t entspricht, soll aber zu Verdeutlichung der einzelnen Schritte helfen.  F\u00fcr eine Erl\u00e4uterung von Trickle Ice siehe  hier .", 
+            "title": "Einleitung"
+        }, 
+        {
+            "location": "/sequenz/#sequenzdiagramm", 
+            "text": "Sequenzdiagramm", 
+            "title": "Sequenzdiagramm"
+        }, 
+        {
+            "location": "/socket-api/", 
+            "text": "TBA", 
+            "title": "4. API"
+        }
+    ]
+}
