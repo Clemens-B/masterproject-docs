@@ -523,7 +523,7 @@
 <strong>SFU:</strong> <a href="https://meet.jit.si/">jitsi.org</a></p>
 <h2 id="webrtc-multi-user-topologie">WebRTC Multi-User Topologie<a class="headerlink" href="#webrtc-multi-user-topologie" title="Permanent link">&para;</a></h2>
 <p>In WebRTC Multi-User Anwendungen lässt sich zunächst zwischen Star- und Mesh-Topologie unterscheiden. Beim Meshdesign ist jeder User mit jedem anderen User über einen Peer verbunden, wohingegen bei der Startopologie ein zentrales System die Streams eines Users an andere User weiterleitet.</p>
-<p><center><img src="images/simple-star-top.png" width="300"><br>
+<p><center><img src="../images/simple-star-top.png" width="300"><br>
 <small>Einfache Darstellung der Star-Topologie</small>
 </center></p>
 <p>Für die Implementierung einer Star-Topologie wird ein sog. WebRTC-Medien-Server verwendet. Im Rahmen dieses Projektes wurde sich für <a href="http://www.kurento.org/">Kurento</a> als Basis der gesamten Anwendung entschieden.</p>
@@ -531,12 +531,12 @@
 <p>Innerhalb des Star-Topologie-Design lässt sich weiterhin zwischen <em>Selective Forwarding Unit</em> (<strong>SFU</strong>) und <em>Multipoint Conferencing Unit</em> (<strong>MCU</strong>) unterscheiden. Im Folgenden wird nun näher auf die einzelnen Designs eingegangen und deren Implementierung mit Kurento. Im Rahmen des Projektes wird die SFU-Architektur umgesetzt. <a href="">Hier</a> kann direkt das MCU-Kapitel übersprungen werden.</p>
 <h3 id="mcu">MCU<a class="headerlink" href="#mcu" title="Permanent link">&para;</a></h3>
 <p>MCU steht für "Multipoint Conferencing Unit". Ein MCU bietet die Möglichkeit, mehrere Teilnehmer in einem einzelnem Audio/+Video Stream zu verbinden. Die Media-Streams der einzelnen Teilnehmer werden dabei zu einem einzigen Stream gemixt, d.h. es besteht nur ein Upload-Stream für das gesendete Video/Audio und ein Download-Stream für das Video/Audio der restlichen Teilnehmer. In folgender Abbildung wird deutlich, dass die Teilnehmer je nur eine Verbindung zum Medien-Server haben und der Medien-Server insgesamt 5 Verbinden offen hat: </p>
-<p><center><img src="images/mcu.png" width="300"><br>
+<p><center><img src="../images/mcu.png" width="300"><br>
 <small>Connections: 1 | 5 </small><br>
 <small>MCU Architektur</small>
 </center></p>
 <p>Um dies zu erreichen, müssen die einzelnen Streams der Teilnehmer zu einem Stream kompiniert werden. In MCU muss also folgendes für jeden Teilnehmer leisten:</p>
-<p><center><img src="images/mcu-processing.png" ><br>
+<p><center><img src="../images/mcu-processing.png" ><br>
 <small>Verarbeitung der Media-Streams von einer MCU</small>
 </center></p>
 <p>Die Kombination mehrerer Streams erfordert viele Ressourcen des MCU. In der Darstellung ist der Ressourcenaufwand von grün zu rot markiert, mit welcher die CPU belastet wird.</p>
@@ -570,12 +570,12 @@
 </ul>
 <h3 id="sfu">SFU<a class="headerlink" href="#sfu" title="Permanent link">&para;</a></h3>
 <p>SFU steht für "Selective Forwarding Unit". In einer SFU empfängt der Teilnehmer alle Streams der anderen User einzeln. Jedoch im Gegensatz zum Mesh-Design wird sein eigener Stream nur einmal an den Medien-Server geleitet. Der Medien-Server dient somit als eine Art Router, der entscheidet, welcher User welchen Stream angezeigt bekommt. Dies hat den Vorteil, dass für jeden Stream ein Video-Element kreiert werden kann und so dieses in der Größe etc. angepasst werden kann. Des Weiteren ist die Setup-Zeit für einen Call geringer, da der Stream nicht mehr mit den anderen Streams gemergt werden muss (siehe MCU), was wiederum zu einer geringeren Last auf dem Medien-Server bedeutet. In folgender Abbildung wird deutlich, dass der Nutzer seinen eigenen Stream nur einmal uploaded, dafür aber von jedem Teilnehmer einen Stream empfängt:</p>
-<p><center><img src="images/sfu.png" width="300"><br>
+<p><center><img src="../images/sfu.png" width="300"><br>
 <small>Connections: 5 | 25 </small><br>
 <small>SFU Architektur</small>
 </center></p>
 <p>Im Gegensatz zur MCU wird hier der Stream der Teilnehmer nicht kombiniert, sondern einfach nur weitergeleitet. Somit sieht die Verarbeitung von Video/Audio in einer SFU wie folgt aus:</p>
-<p><center><img src="images/sfu-processing.png"><br>
+<p><center><img src="../../images/sfu-processing.png"><br>
 <small>Verarbeitung der Media-Streams von einer SFU</small>
 </center></p>
 <h4 id="sfu-mit-kurento">SFU mit Kurento<a class="headerlink" href="#sfu-mit-kurento" title="Permanent link">&para;</a></h4>
@@ -641,12 +641,12 @@ Vier Incoming-Endpoints</p>
 </ol>
 <h3 id="architektur">Architektur<a class="headerlink" href="#architektur" title="Permanent link">&para;</a></h3>
 <p>Der Application-Server stellt zum Client eine Verbindung via Websocket her, um hierdrüber die SDP-Offers/-Answers auszutauschen. Diese werden daraufhin vom Application-Server bei Kurento regestriert, nachdem eine Media-Pipeline für den jeweiligen Raum erstellt wurde.</p>
-<p><center><img src="images/architecture.png" width=""><br>
+<p><center><img src="../images/architecture.png" width=""><br>
 <small>Vereinfachte Darstellung der Architektur</small>
 </center></p>
 <p>Dies bedeutet, das im Rahmen dieses Projektes der Appikation-Server entwickelt werden muss, der das Signalling im Trickle ICE Format übernimmt und eine Verbindung zu Kurento aufbaut.</p>
 <p>Die Architektur lässt sich ausführlicher wie folgt darstellen:
-<center><img src="images/architecture-complex.png" width=""><br>
+<center><img src="../images/architecture-complex.png" width=""><br>
 <small>Architektur Darstellung nach <a href="http://doc-kurento.readthedocs.io/en/stable/mastering/kurento_architecture.html">Kurento</a></small>
 </center></p>
 <h3 id="tech-stack">Tech-Stack<a class="headerlink" href="#tech-stack" title="Permanent link">&para;</a></h3>
