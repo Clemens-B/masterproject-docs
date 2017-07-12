@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Multi-User WebRTC Chat App \nMasterprojekt 2017\n\n\nEinleitung\n\n\nMulti-User WebRTC Chat App build with\n\n\n\n\nnode.js\n\n\nsocket.io\n\n\nangular2+\n\n\nKurento Media Server\n\n\n\n\nGliederung der Docs\n\n\n\n\nDesign \n UI\n\n\nArchitektur \n Prozesse\n\n\nArchitektur\n\n\nSequenz-Diagramm\n\n\n\n\n\n\nAPI", 
+            "text": "Multi-User WebRTC Chat App \nMasterprojekt 2017\n\n\nEinleitung\n\n\nMulti-User WebRTC Chat App build with\n\n\n\n\nnode.js\n\n\nsocket.io\n\n\nangular2+\n\n\nKurento Media Server\n\n\n\n\nGliederung der Docs\n\n\n\n\nDesign \n UI\n\n\nArchitektur \n Prozesse\n\n\nArchitektur\n\n\nSequenz-Diagramm\n\n\n\n\n\n\nAPI\n\n\n\n\nProjekt Status\n\n\nDer Projektstatus der Anwendung ist Beta. In der Regel k\u00f6nnen alle Anwender, wenn sie einen entsprechenden Browser verwenden, miteinander kommunizieren und sich gegenseitig verstehen und sehen. Jedoch kommt es unter gewissen Umst\u00e4nden dazu, dass ein Teilnehmer zwar den Raum betreten kann, er aber nicht von allen verstanden wird. Diese Problematik k\u00f6nnten wir auch bei anderen WebRtc-Anbietern, wie appear.in, discord oder talky, feststellen. Dabei ist fraglich, was die Ursache des Fehlers ist, da in bestimmten Browser-Konstellation diese Anwendungen funktioniert haben oder eben nicht.\n\n\n\n  \n\n    \nFeature/Funktion\n\n    \nStatus\n \n    \nNotes\n\n    \nIssue-Id\n\n  \n\n  \n\n    \nAudio/Video\n\n    \nOk\n \n    \nsiehe Oben\n\n    \n\n  \n\n        \n\n    \nSpeech Detection\n\n    \nOk\n \n    \nMan sieht wer spricht\n\n    \n\n  \n\n    \n\n    \nAudio/Video-toggle\n\n    \nOk\n \n    \n\n    \n\n  \n\n      \n\n    \nAvatar \n&\n Namen\n\n    \nOk\n \n    \nAvatar Bilder werden im Theater-Modus bewusst nicht angezeigt. Ein Video ohne Video-Bild zu maximieren macht keinen Sinn\n\n    \n\n  \n\n    \n\n    \nChat\n\n    \nOk\n \n    \nNamen, Sound, Historie, Ordnung implementiert\n\n        \n\n  \n\n      \n\n    \nFilesharing\n\n    \nOk\n \n    \nUpload, Delete, Order nach Datum (neuste on Top), PDF-View im Videogrid, Download\n\n    \n\n  \n\n        \n\n    \nGrid\n\n    \nOk - with Bugs\n \n    \nFielsharing Grid fehlerhaft bei mehr als 8 Usern, \n\n    \n\n  \n\n      \n\n    \nScreensharing\n\n    \nBeta - with Bugs\n \n    \nWas Funktioniert: Screensharing mit Firefox\nNoch Verbesserngsw\u00fcrdig: Nutzer leavt bevor er Screensharing machen kann\nBugs: Das Leaven und \"gleichzeitige\" betreten f\u00fchrt zu Fehlern, wenn der Peer noch nicht disposed wurde -> renogiciation instead of dispose and negotiation || eigenen Peer f\u00fcr Screensharing hinzuf\u00fcgen(l\u00f6st auch das Problem mit dem verlassen)\n\n    \n\n  \n\n          \n\n    \nLeave Button\n\n    \nOk", 
             "title": "1. Einleitung"
         }, 
         {
@@ -19,6 +19,11 @@
             "location": "/#gliederung-der-docs", 
             "text": "Design   UI  Architektur   Prozesse  Architektur  Sequenz-Diagramm    API", 
             "title": "Gliederung der Docs"
+        }, 
+        {
+            "location": "/#projekt-status", 
+            "text": "Der Projektstatus der Anwendung ist Beta. In der Regel k\u00f6nnen alle Anwender, wenn sie einen entsprechenden Browser verwenden, miteinander kommunizieren und sich gegenseitig verstehen und sehen. Jedoch kommt es unter gewissen Umst\u00e4nden dazu, dass ein Teilnehmer zwar den Raum betreten kann, er aber nicht von allen verstanden wird. Diese Problematik k\u00f6nnten wir auch bei anderen WebRtc-Anbietern, wie appear.in, discord oder talky, feststellen. Dabei ist fraglich, was die Ursache des Fehlers ist, da in bestimmten Browser-Konstellation diese Anwendungen funktioniert haben oder eben nicht.  \n   \n     Feature/Funktion \n     Status  \n     Notes \n     Issue-Id \n   \n   \n     Audio/Video \n     Ok  \n     siehe Oben \n     \n   \n         \n     Speech Detection \n     Ok  \n     Man sieht wer spricht \n     \n   \n     \n     Audio/Video-toggle \n     Ok  \n     \n     \n   \n       \n     Avatar  &  Namen \n     Ok  \n     Avatar Bilder werden im Theater-Modus bewusst nicht angezeigt. Ein Video ohne Video-Bild zu maximieren macht keinen Sinn \n     \n   \n     \n     Chat \n     Ok  \n     Namen, Sound, Historie, Ordnung implementiert \n         \n   \n       \n     Filesharing \n     Ok  \n     Upload, Delete, Order nach Datum (neuste on Top), PDF-View im Videogrid, Download \n     \n   \n         \n     Grid \n     Ok - with Bugs  \n     Fielsharing Grid fehlerhaft bei mehr als 8 Usern,  \n     \n   \n       \n     Screensharing \n     Beta - with Bugs  \n     Was Funktioniert: Screensharing mit Firefox Noch Verbesserngsw\u00fcrdig: Nutzer leavt bevor er Screensharing machen kann Bugs: Das Leaven und \"gleichzeitige\" betreten f\u00fchrt zu Fehlern, wenn der Peer noch nicht disposed wurde -> renogiciation instead of dispose and negotiation || eigenen Peer f\u00fcr Screensharing hinzuf\u00fcgen(l\u00f6st auch das Problem mit dem verlassen) \n     \n   \n           \n     Leave Button \n     Ok", 
+            "title": "Projekt Status"
         }, 
         {
             "location": "/design/", 
@@ -136,9 +141,39 @@
             "title": "Sequenzdiagramm"
         }, 
         {
-            "location": "/socket-api/", 
-            "text": "TBA", 
-            "title": "4. API"
+            "location": "/api/connect/", 
+            "text": "io.connect(url)\n\n\nConnects client to the server. Will trigger the creation of a new User with user.id = io.id.\nDefault Port is 8080.\n\n\nExample Request\n\n\nio\n.\nconnect\n(\nlocalhost\n:\n8080\n);\n\n\n\n\n\n\nParameter\n\n\n\n  \n\n    \nFeld\n\n    \nTyp\n \n    \nDescription\n\n  \n\n  \n\n    \nurl\n\n    \nstring\n \n    \nurl of the socket server\n\n  \n\n\n\n\nResponse\n\n\n\n\nSuccess\n\n\n\n\nnone\n\n\n\n\nFailure\n\n\n\n\nSends an Error Response via socket to the client:\n\n\n  \n\n    \nFeld\n\n    \nValue\n \n    \nDescription\n\n  \n\n  \n\n    \nid\n\n    \n'error'\n \n    \nsocket message\n\n  \n\n    \n\n    \ndata\n\n    \nString\n \n    \nTBA\n\n  \n\n\n\n\nInternal Server Logic\n\n\nEstablish socket connection between server and client. Creates a new user with user.id = socket.id.\n\n\nExample:\n\n\nio\n.\non\n(\nconnection\n \n(\nsocket\n)\n \n=\n \nnew\n \nUser\n(\nsocket\n);\n\n\n\n\n\n\nmodule\n.\nexports\n \n=\n \nclass\n \nUser\n \n{\n\n    \nconstructor\n(\nsocket\n)\n \n{\n\n\n        \nthis\n.\nid\n \n=\n \nsocket\n.\nid\n;\n\n\n        \nsocket\n\n            \n.\nemit\n(\nid\n,\n \n{\n \nid\n:\n \nthis\n.\nid\n \n})\n\n            \n.\non\n(\nerror\n,\n \n()\n \n=\n \nthis\n.\nsocketError\n())\n\n    \n}", 
+            "title": "connect"
+        }, 
+        {
+            "location": "/api/connect/#ioconnecturl", 
+            "text": "Connects client to the server. Will trigger the creation of a new User with user.id = io.id.\nDefault Port is 8080.", 
+            "title": "io.connect(url)"
+        }, 
+        {
+            "location": "/api/connect/#example-request", 
+            "text": "io . connect ( localhost : 8080 );", 
+            "title": "Example Request"
+        }, 
+        {
+            "location": "/api/connect/#parameter", 
+            "text": "Feld \n     Typ  \n     Description \n   \n   \n     url \n     string  \n     url of the socket server", 
+            "title": "Parameter"
+        }, 
+        {
+            "location": "/api/connect/#response", 
+            "text": "Success   none   Failure   Sends an Error Response via socket to the client: \n   \n     Feld \n     Value  \n     Description \n   \n   \n     id \n     'error'  \n     socket message \n   \n     \n     data \n     String  \n     TBA", 
+            "title": "Response"
+        }, 
+        {
+            "location": "/api/connect/#internal-server-logic", 
+            "text": "Establish socket connection between server and client. Creates a new user with user.id = socket.id.  Example:  io . on ( connection   ( socket )   =   new   User ( socket );   module . exports   =   class   User   { \n     constructor ( socket )   { \n\n         this . id   =   socket . id ; \n\n         socket \n             . emit ( id ,   {   id :   this . id   }) \n             . on ( error ,   ()   =   this . socketError ()) \n     }", 
+            "title": "Internal Server Logic"
+        }, 
+        {
+            "location": "/api/joinroom/", 
+            "text": "", 
+            "title": "joinRoom"
         }
     ]
 }

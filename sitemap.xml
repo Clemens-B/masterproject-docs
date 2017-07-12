@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-05-17</lastmod>
+     <lastmod>2017-07-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>/design/</loc>
-     <lastmod>2017-05-17</lastmod>
+     <lastmod>2017-07-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -21,24 +21,32 @@
         
     <url>
      <loc>/architecture/</loc>
-     <lastmod>2017-05-17</lastmod>
+     <lastmod>2017-07-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/sequenz/</loc>
-     <lastmod>2017-05-17</lastmod>
+     <lastmod>2017-07-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     
 
     
+        
     <url>
-     <loc>/socket-api/</loc>
-     <lastmod>2017-05-17</lastmod>
+     <loc>/api/connect/</loc>
+     <lastmod>2017-07-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/api/joinroom/</loc>
+     <lastmod>2017-07-13</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>

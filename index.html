@@ -36,6 +36,8 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="./stylesheets/extra.css">
+    
     
   </head>
   
@@ -177,6 +179,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#projekt-status" title="Projekt Status" class="md-nav__link">
+    Projekt Status
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -251,10 +260,46 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="socket-api/" title="4. API" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
       4. API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        4. API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api/connect/" title="connect" class="md-nav__link">
+      connect
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api/joinroom/" title="joinRoom" class="md-nav__link">
+      joinRoom
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -292,6 +337,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#projekt-status" title="Projekt Status" class="md-nav__link">
+    Projekt Status
+  </a>
+  
+</li>
+      
       
       
     </ul>
@@ -308,7 +360,7 @@
                 
                 
                 <h1 id="multi-user-webrtc-chat-app-masterprojekt-2017">Multi-User WebRTC Chat App <small>Masterprojekt 2017</small><a class="headerlink" href="#multi-user-webrtc-chat-app-masterprojekt-2017" title="Permanent link">&para;</a></h1>
-<h3 id="einleitung">Einleitung<a class="headerlink" href="#einleitung" title="Permanent link">&para;</a></h3>
+<h2 id="einleitung">Einleitung<a class="headerlink" href="#einleitung" title="Permanent link">&para;</a></h2>
 <p>Multi-User WebRTC Chat App build with</p>
 <ul>
 <li>node.js</li>
@@ -316,7 +368,7 @@
 <li>angular2+</li>
 <li>Kurento Media Server</li>
 </ul>
-<h3 id="gliederung-der-docs">Gliederung der Docs<a class="headerlink" href="#gliederung-der-docs" title="Permanent link">&para;</a></h3>
+<h2 id="gliederung-der-docs">Gliederung der Docs<a class="headerlink" href="#gliederung-der-docs" title="Permanent link">&para;</a></h2>
 <ol>
 <li><a href="design/">Design &amp; UI</a></li>
 <li>Architektur &amp; Prozesse<ol>
@@ -324,8 +376,72 @@
 <li><a href="sequenz/">Sequenz-Diagramm</a></li>
 </ol>
 </li>
-<li><a href="socket-api/">API</a></li>
+<li><a href="socket-api.md">API</a></li>
 </ol>
+<h2 id="projekt-status">Projekt Status<a class="headerlink" href="#projekt-status" title="Permanent link">&para;</a></h2>
+<p>Der Projektstatus der Anwendung ist Beta. In der Regel können alle Anwender, wenn sie einen entsprechenden Browser verwenden, miteinander kommunizieren und sich gegenseitig verstehen und sehen. Jedoch kommt es unter gewissen Umständen dazu, dass ein Teilnehmer zwar den Raum betreten kann, er aber nicht von allen verstanden wird. Diese Problematik könnten wir auch bei anderen WebRtc-Anbietern, wie appear.in, discord oder talky, feststellen. Dabei ist fraglich, was die Ursache des Fehlers ist, da in bestimmten Browser-Konstellation diese Anwendungen funktioniert haben oder eben nicht.</p>
+<table style="width:100%">
+  <tr>
+    <th>Feature/Funktion</th>
+    <th>Status</th> 
+    <th>Notes</th>
+    <th>Issue-Id</th>
+  </tr>
+  <tr>
+    <td>Audio/Video</td>
+    <td>Ok</td> 
+    <td>siehe Oben</td>
+    <td></td>
+  </tr>
+        <tr>
+    <td>Speech Detection</td>
+    <td>Ok</td> 
+    <td>Man sieht wer spricht</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td>Audio/Video-toggle</td>
+    <td>Ok</td> 
+    <td></td>
+    <td></td>
+  </tr>
+      <tr>
+    <td>Avatar & Namen</td>
+    <td>Ok</td> 
+    <td>Avatar Bilder werden im Theater-Modus bewusst nicht angezeigt. Ein Video ohne Video-Bild zu maximieren macht keinen Sinn</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td>Chat</td>
+    <td>Ok</td> 
+    <td>Namen, Sound, Historie, Ordnung implementiert</td>
+        <td></td>
+  </tr>
+      <tr>
+    <td>Filesharing</td>
+    <td>Ok</td> 
+    <td>Upload, Delete, Order nach Datum (neuste on Top), PDF-View im Videogrid, Download</td>
+    <td></td>
+  </tr>
+        <tr>
+    <td>Grid</td>
+    <td>Ok - with Bugs</td> 
+    <td>Fielsharing Grid fehlerhaft bei mehr als 8 Usern, </td>
+    <td></td>
+  </tr>
+      <tr>
+    <td>Screensharing</td>
+    <td>Beta - with Bugs</td> 
+    <td>Was Funktioniert: Screensharing mit Firefox<br>Noch Verbesserngswürdig: Nutzer leavt bevor er Screensharing machen kann<br>Bugs: Das Leaven und "gleichzeitige" betreten führt zu Fehlern, wenn der Peer noch nicht disposed wurde -> renogiciation instead of dispose and negotiation || eigenen Peer für Screensharing hinzufügen(löst auch das Problem mit dem verlassen)</td>
+    <td></td>
+  </tr>
+          <tr>
+    <td>Leave Button</td>
+    <td>Ok</td> 
+    <td></td>
+    <td></td>
+  </tr>
+</table>
                 
                   
                 

@@ -1,0 +1,7 @@
+.md-typeset table:not([class]) td {
+   border-right: .1rem solid rgba(0,0,0,.07); 
+}
+
+.md-typeset .md-typeset__table {
+    width: 100%
+}
